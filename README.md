@@ -1,13 +1,11 @@
 Movie Review Sentiment Analysis (BERT):=
-This project uses BERT Transformer to analyze the sentiment of movie reviews — whether they are positive or negative.
-It also includes a Streamlit web app for real-time prediction.
+This project uses BERT Transformer to analyze the sentiment of movie reviews — whether they are positive or negative.It also includes a Streamlit web app for real-time prediction.
 
 Project Overview:=
-The goal of this project is to predict the sentiment of a given movie review using BERT (Bidirectional Encoder Representations from Transformers), 
-a state-of-the-art NLP model from Google.
+The goal of this project is to predict the sentiment of a given movie review using BERT (Bidirectional Encoder Representations from Transformers), a state-of-the-art NLP model from Google.
 
-Dataset:=
-Dataset Used: IMDB Movie Reviews Dataset
+Dataset:= 
+The dataset used is the [IMDb Movie Reviews Dataset](https://huggingface.co/datasets/imdb) from Hugging Face.
 The dataset contains 50,000 movie reviews, equally divided between positive and negative sentiments.
 
 Data Preprocessing:=
