@@ -24,6 +24,6 @@ if st.button("Analyze"):
         score = result['score']
 
         if label == "POSITIVE":
-            st.success(f"🌟 Sentiment: {label} (Confidence: {score:.2f})")
+            st.success(f"🤩 Sentiment: {label}")
         else:
-            st.error(f"😞 Sentiment: {label} (Confidence: {score:.2f})")
+            st.error(f"😞 Sentiment: {label}")
