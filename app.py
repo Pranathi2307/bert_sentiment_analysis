@@ -1,30 +1,29 @@
 import streamlit as st
-from transformers import BertTokenizer, BertForSequenceClassification
-import torch
+from transformers import pipeline
 
-# Load the trained model and tokenizer
-model_path = "bert_sentiment_model"
-model = BertForSequenceClassification.from_pretrained(model_path)
-tokenizer = BertTokenizer.from_pretrained(model_path)
+# Load BERT model directly from Hugging Face
+@st.cache_resource
+def load_model():
+    # Using a lightweight pre-trained model for sentiment analysis
+    return pipeline("sentiment-analysis", model="distilbert-base-uncased-finetuned-sst-2-english")
 
-st.title("🎭 Sentiment Analysis using BERT")
+model = load_model()
 
-# User input
-user_input = st.text_area("Enter your review:", placeholder="Type your movie review here...")
+# Streamlit UI
+st.title("🎬 Movie Review Sentiment Analysis (BERT)")
+st.write("Enter your movie review below to analyze its sentiment:")
 
-if st.button("Predict Sentiment"):
+user_input = st.text_area("Your review:", "")
+
+if st.button("Analyze"):
     if user_input.strip() == "":
-        st.warning("Please enter a review.")
+        st.warning("Please enter a review first.")
     else:
-        # Tokenize input
-        inputs = tokenizer(user_input, return_tensors="pt", truncation=True, padding=True, max_length=256)
+        result = model(user_input)[0]
+        label = result['label']
+        score = result['score']
 
-        # Get prediction
-        with torch.no_grad():
-            outputs = model(**inputs)
-            probs = torch.nn.functional.softmax(outputs.logits, dim=-1)
-            pred = torch.argmax(probs, dim=1).item()
-
-        # Map output to sentiment
-        sentiment = "Positive 😀" if pred == 1 else "Negative 😔"
-        st.success(f"Prediction: {sentiment}")
+        if label == "POSITIVE":
+            st.success(f"🌟 Sentiment: {label} (Confidence: {score:.2f})")
+        else:
+            st.error(f"😞 Sentiment: {label} (Confidence: {score:.2f})")
